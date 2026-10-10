@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Oil Price Dashboard 2026</title>
+<meta name="description" content="Brent and WTI oil prices in 2026: daily prices, the Brent–WTI gap, risk measures, key events and what it means for Syria. Analysis by Alaa Sardar.">
+<meta property="og:title" content="Oil Price Dashboard 2026: what it means for Syria">
+<meta property="og:description" content="Brent +72% this year. Daily prices, the Brent–WTI gap, volatility, key events and forecasts. Analysis by Alaa Sardar.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+:root{--font-anthropic-sans:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;--font-anthropic-serif:"Source Serif 4",Georgia,serif;
+--color-fg:#1f1e1c;--color-fg-muted:#6b6862;--color-bg:#f7f6f2;--color-panel:#ffffff;--color-border-line:#e3e0d8;
+--color-ok:#2f7d4f;--color-warn:#b7791f;--color-bad:#c0392b;
+--cds-font-size-caption:.8rem;--cds-font-size-body:.95rem;--cds-font-size-heading:1.1rem;--cds-font-size-title:2rem;--cds-font-weight-medium:600;
+--cds-gap-xs:4px;--cds-gap-sm:8px;--cds-gap-md:16px;--cds-gap-lg:24px;--cds-gap-xl:36px;--cds-pad-xs:4px;--cds-pad-sm:8px;--cds-pad-md:14px;--cds-pad-lg:20px;--cds-radius:10px;
+--cds-chart-grid:#ece9e2;--cds-chart-axis:#9a968d;--cds-chart-reference:#8a857b;--cds-chart-muted:#a8a49b;--cds-chart-status-critical:#c0392b;
+--cds-surface-popover:#ffffff;--cds-border:#dcd8cf;--cds-shadow-popover:0 6px 20px rgba(0,0,0,.12);--cds-text-secondary:#6b6862;--cds-dur-slow:.4s;
+--s1:#2563a8;--s2:#d9822b;--s3:#7c3aed;--s4:#0f8b8d}
+@media (prefers-color-scheme:dark){:root{--color-fg:#ecebe7;--color-fg-muted:#a4a19a;--color-bg:#161615;--color-panel:#1f1f1d;--color-border-line:#33322f;
+--color-ok:#5cbf83;--color-warn:#e0a84a;--color-bad:#ec6a5c;--cds-chart-grid:#2c2b28;--cds-chart-axis:#77736b;--cds-chart-reference:#8f8a80;--cds-chart-muted:#6f6b63;--cds-chart-status-critical:#ec6a5c;
+--cds-surface-popover:#262624;--cds-border:#3a3936;--cds-shadow-popover:0 6px 20px rgba(0,0,0,.5);--cds-text-secondary:#a4a19a;--s1:#6aa6e8;--s2:#f0a35a;--s3:#a98bf5;--s4:#4cc3c5}}
+html,body{margin:0;background:var(--color-bg);color:var(--color-fg)}
+#dash-root{max-width:1180px;margin:0 auto;padding:28px clamp(16px,3vw,32px) 48px}
+.dash-skeleton{color:transparent}
+.foot{color:var(--color-fg-muted);font:400 .8rem var(--font-anthropic-sans);margin-top:28px;line-height:1.5}
+</style></head><body><div id="dash-root">
+<style>
+.oil{font-family:var(--font-anthropic-sans);color:var(--color-fg);display:flex;flex-direction:column;gap:var(--cds-gap-xl)}
+.oil .hdr h1{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);margin:0}
+.oil .sub{color:var(--color-fg-muted);font-size:var(--cds-font-size-caption);margin-top:var(--cds-gap-xs)}
+.oil .take{font-size:var(--cds-font-size-body);margin-top:var(--cds-gap-sm);max-width:62rem;line-height:1.5}
+.oil .sec-h{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-sm)}
+.oil .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:var(--cds-gap-md)}
+.oil .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr));gap:var(--cds-gap-md)}
+.oil .card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);min-width:0;position:relative}
+.oil .card h3{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0;display:flex;align-items:center;gap:var(--cds-gap-xs)}
+.oil .note{color:var(--color-fg-muted);font-size:var(--cds-font-size-caption);margin:var(--cds-gap-xs) 0 var(--cds-gap-md);line-height:1.45}
+.oil .means{border-left:3px solid var(--cds-chart-reference);padding:var(--cds-pad-xs) var(--cds-pad-sm);margin-top:var(--cds-gap-md);font-size:var(--cds-font-size-body);line-height:1.45}
+.oil .means b{font-weight:var(--cds-font-weight-medium)}
+.oil .kpi .lbl{color:var(--color-fg-muted);font-size:var(--cds-font-size-caption);display:flex;align-items:center;gap:var(--cds-gap-xs)}
+.oil .kpi .val{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);font-variant-numeric:tabular-nums;margin:var(--cds-gap-xs) 0}
+.oil .kpi .chg{font-size:var(--cds-font-size-caption);font-variant-numeric:tabular-nums}
+.oil .rag{display:inline-flex;align-items:center;gap:6px;font-size:var(--cds-font-size-caption);margin-top:var(--cds-gap-xs)}
+.oil .dot{width:.6rem;height:.6rem;border-radius:50%;display:inline-block;background:var(--cds-chart-muted)}
+.oil .dot.g{background:var(--color-ok)}.oil .dot.a{background:var(--color-warn)}.oil .dot.r{background:var(--color-bad)}
+.oil .up{color:var(--color-bad)}.oil .down{color:var(--color-ok)}.oil .flat{color:var(--color-fg-muted)}
+.oil .info{display:inline-flex;align-items:center;justify-content:center;width:1rem;height:1rem;border-radius:50%;border:1px solid var(--color-border-line);font-size:.65rem;color:var(--color-fg-muted);cursor:help;position:relative;font-style:normal;font-weight:400;flex:none}
+.oil .info:hover::after,.oil .info:focus::after{content:attr(data-tip);position:absolute;left:50%;top:1.4rem;transform:translateX(-50%);width:min(18rem,70vw);background:var(--cds-surface-popover);border:1px solid var(--cds-border);border-radius:var(--cds-radius);box-shadow:var(--cds-shadow-popover);padding:var(--cds-pad-xs) var(--cds-pad-sm);font-size:var(--cds-font-size-caption);color:var(--color-fg);line-height:1.45;z-index:20;white-space:normal;text-align:left}
+.oil .chart{position:relative;min-height:300px}
+.oil .chart.sm{min-height:220px}
+.oil .chart svg{display:block}
+.oil .tip{position:absolute;pointer-events:none;background:var(--cds-surface-popover);border:1px solid var(--cds-border);border-radius:var(--cds-radius);box-shadow:var(--cds-shadow-popover);padding:var(--cds-pad-xs) var(--cds-pad-sm);font-size:var(--cds-font-size-caption);font-variant-numeric:tabular-nums;white-space:nowrap;z-index:10;display:none}
+.oil .tip .d{color:var(--cds-text-secondary);margin-bottom:2px}
+.oil .tip .sw{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px}
+.oil .toolbar{display:flex;gap:var(--cds-gap-xs);flex-wrap:wrap;margin-bottom:var(--cds-gap-sm)}
+.oil .seg{font:inherit;font-size:var(--cds-font-size-caption);border:1px solid var(--color-border-line);background:transparent;color:var(--color-fg);border-radius:var(--cds-radius);padding:2px 10px;cursor:pointer}
+.oil .seg[aria-pressed=true]{background:var(--color-fg);color:var(--color-bg)}
+.oil .legend{display:flex;flex-wrap:wrap;gap:var(--cds-gap-md);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-bottom:var(--cds-gap-xs)}
+.oil .legend i{display:inline-block;width:14px;height:0;border-top:2px solid;vertical-align:middle;margin-right:6px}
+.oil table{width:100%;border-collapse:collapse;font-size:var(--cds-font-size-caption);font-variant-numeric:tabular-nums}
+.oil th{text-align:right;color:var(--color-fg-muted);font-weight:var(--cds-font-weight-medium);padding:6px 8px;border-bottom:1px solid var(--color-border-line);position:sticky;top:0;background:var(--color-panel)}
+.oil td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--cds-chart-grid)}
+.oil th:first-child,.oil td:first-child{text-align:left}
+.oil td.txt,.oil th.txt{text-align:left;white-space:normal}
+.oil .tbl{overflow:auto;max-height:26rem}
+.oil .evn{display:inline-flex;align-items:center;justify-content:center;width:1.2rem;height:1.2rem;border-radius:50%;background:var(--color-fg);color:var(--color-bg);font-size:.65rem}
+.oil a{color:inherit}
+.oil .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:var(--cds-gap-md);margin-top:var(--cds-gap-md)}
+.oil .box{border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-md)}
+.oil .box h4{margin:0 0 var(--cds-gap-xs);font-size:var(--cds-font-size-body);font-weight:var(--cds-font-weight-medium)}
+.oil .box p{margin:0;font-size:var(--cds-font-size-caption);line-height:1.5;color:var(--color-fg)}
+.oil ul.plain{margin:0;padding-left:1.1rem;font-size:var(--cds-font-size-body);line-height:1.6}
+.oil .gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:var(--cds-gap-sm) var(--cds-gap-lg);font-size:var(--cds-font-size-caption);line-height:1.5}
+.oil .gloss b{font-weight:var(--cds-font-weight-medium)}
+.oil .failed{display:flex;align-items:center;justify-content:center;gap:6px;color:var(--color-fg-muted);font-size:var(--cds-font-size-caption);min-height:inherit}
+.oil .failed::before{content:"";width:.375rem;height:.375rem;border-radius:50%;background:var(--color-bad)}
+.oil [data-dash-source-state=refreshing]{opacity:.5;transition:opacity var(--cds-dur-slow)}
+.oil [data-dash-source-state=empty]{color:transparent}
+</style>
+
+<div class="oil">
+  <header class="hdr" id="top">
+    <h1>Oil Price Dashboard 2026</h1>
+    <div class="sub">Brent and WTI crude oil, 2 January – <span data-source="headline" data-field="as_of" data-row="0" class="dash-skeleton">—</span> · USD per barrel · Analysis by Alaa Sardar</div>
+    <p class="take" id="takeaway" data-source="headline"></p>
+  </header>
+
+  <section id="headline">
+    <div class="kpis">
+      <div class="card kpi" id="kpi-brent">
+        <div class="lbl">Brent price <span class="info" tabindex="0" data-tip="Brent is the main world oil price, used for oil sold in Europe, Asia and the Middle East. Our region buys oil at Brent-linked prices.">i</span></div>
+        <div class="val dash-skeleton" data-source="headline" data-field="brent_last" data-row="0">—</div>
+        <div class="chg" id="k-brent-chg"></div>
+        <div class="rag" id="k-brent-rag"></div>
+      </div>
+      <div class="card kpi" id="kpi-ytd">
+        <div class="lbl">Brent change this year <span class="info" tabindex="0" data-tip="Year-to-date: how much the price has moved since the first trading day of 2026 (2 January).">i</span></div>
+        <div class="val dash-skeleton" data-source="headline" data-field="brent_ytd_pct" data-row="0">—</div>
+        <div class="chg" id="k-ytd-sub"></div>
+        <div class="rag" id="k-ytd-rag"></div>
+      </div>
+      <div class="card kpi" id="kpi-wti">
+        <div class="lbl">WTI price <span class="info" tabindex="0" data-tip="WTI (West Texas Intermediate) is the American oil price. The US produces much of its own oil, so WTI reacts less to problems in the Gulf.">i</span></div>
+        <div class="val dash-skeleton" data-source="headline" data-field="wti_last" data-row="0">—</div>
+        <div class="chg" id="k-wti-chg"></div>
+        <div class="rag" id="k-wti-sub"></div>
+      </div>
+      <div class="card kpi" id="kpi-gap">
+        <div class="lbl">Brent–WTI gap <span class="info" tabindex="0" data-tip="Brent price minus WTI price. On normal days it is about $3–6, roughly the cost of shipping US oil abroad. A wide gap means oil is scarce outside the US, close to our region.">i</span></div>
+        <div class="val dash-skeleton" data-source="headline" data-field="gap_last" data-row="0">—</div>
+        <div class="chg" id="k-gap-chg"></div>
+        <div class="rag" id="k-gap-rag"></div>
+      </div>
+      <div class="card kpi" id="kpi-vol">
+        <div class="lbl">Price swings (30-day volatility) <span class="info" tabindex="0" data-tip="How wildly the Brent price has moved over the last 30 days, expressed as a yearly percentage. Normal oil volatility is about 25–35%. Higher means a rougher ride.">i</span></div>
+        <div class="val dash-skeleton" data-source="headline" data-field="vol30" data-row="0">—</div>
+        <div class="chg" id="k-vol-chg"></div>
+        <div class="rag" id="k-vol-rag"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="prices">
+    <div class="card">
+      <h3>Daily price: Brent and WTI <span class="info" tabindex="0" data-tip="Closing price of the front-month futures contract each trading day. Numbered circles mark the key events listed further down. The dashed lines are 20- and 50-day averages of Brent.">i</span></h3>
+      <p class="note">Hover over the chart for the price on any day. The numbers on the chart match the key events table.</p>
+      <div class="toolbar" id="range">
+        <button class="seg" data-range="3" aria-pressed="false">3 months</button>
+        <button class="seg" data-range="6" aria-pressed="false">6 months</button>
+        <button class="seg" data-range="0" aria-pressed="true">Full year</button>
+      </div>
+      <div class="legend" id="price-legend"></div>
+      <div class="chart dash-skeleton" id="price-chart" data-source="daily events"></div>
+      <div class="means" id="price-means" data-source="headline"></div>
+    </div>
+  </section>
+
+  <section id="monthly">
+    <h2 class="sec-h">Month by month</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Brent at month end <span class="info" tabindex="0" data-tip="Each bar is the Brent closing price on the last trading day of the month. The dot is the average price during the month.">i</span></h3>
+        <p class="note">Bars: price at month end. Dots: average during the month.</p>
+        <div class="chart sm dash-skeleton" id="monthly-chart" data-source="monthly"></div>
+      </div>
+      <div class="card">
+        <h3>Monthly table</h3>
+        <p class="note">USD per barrel. "Change" is Brent month end versus the previous month end (January versus 2 January).</p>
+        <div class="tbl">
+          <table id="monthly-table" data-source="monthly" data-row-key="label">
+            <thead><tr>
+              <th data-field="label">Month</th>
+              <th data-field="brent_end">Brent end</th>
+              <th data-field="brent_avg">Brent avg</th>
+              <th data-field="brent_high">High</th>
+              <th data-field="brent_low">Low</th>
+              <th data-field="brent_chg_pct">Change</th>
+              <th data-field="wti_end">WTI end</th>
+              <th data-field="gap_avg">Avg gap</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="risk">
+    <h2 class="sec-h">Risk measures</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Price swings over time <span class="info" tabindex="0" data-tip="Rolling 30-day volatility of Brent, annualised. Think of it as how bumpy the road is. Below 35% is normal for oil; above 50% is crisis level.">i</span></h3>
+        <p class="note">30-day volatility of Brent, % per year. Shaded bands: normal (below 35%), elevated (35–50%), crisis (above 50%).</p>
+        <div class="chart sm dash-skeleton" id="vol-chart" data-source="daily"></div>
+        <div class="means" id="vol-means" data-source="headline"></div>
+      </div>
+      <div class="card">
+        <h3>Fall from the peak (drawdown) <span class="info" tabindex="0" data-tip="How far Brent is below the highest price reached so far this year. Like climbing a mountain and measuring how far you have slipped back down.">i</span></h3>
+        <p class="note">How far Brent stood below its highest close so far, in %.</p>
+        <div class="chart sm dash-skeleton" id="dd-chart" data-source="daily"></div>
+        <div class="means" id="dd-means" data-source="headline"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:var(--cds-gap-md)">
+      <h3>Largest one-day moves in Brent <span class="info" tabindex="0" data-tip="The eight trading days with the biggest percentage change in the Brent closing price this year.">i</span></h3>
+      <p class="note">Some large moves happen when the futures contract switches to the next delivery month, not because of news. They are flagged as "technical".</p>
+      <div class="tbl">
+        <table id="moves-table" data-source="moves" data-row-key="date">
+          <thead><tr>
+            <th data-field="date">Date</th>
+            <th data-field="brent_prev">Previous close</th>
+            <th data-field="brent_close">Close</th>
+            <th data-field="change_pct">Change</th>
+            <th data-field="note" class="txt">What happened</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="gap">
+    <h2 class="sec-h">The Brent–WTI gap</h2>
+    <div class="card">
+      <h3>How much more the world pays than America <span class="info" tabindex="0" data-tip="Gap = Brent price − WTI price. Green: below $5 (normal, shipping cost only). Amber: $5–10 (supply outside the US getting tight). Red: above $10 (regional supply stress).">i</span></h3>
+      <p class="note">Brent minus WTI, USD per barrel. Bands: green below $5, amber $5–10, red above $10. Brief spikes and dips at the end of March and early April come from the two contracts switching delivery months on different dates.</p>
+      <div class="chart dash-skeleton" id="gap-chart" data-source="daily"></div>
+      <div class="two">
+        <div class="box">
+          <h4>Normal day: start of the year</h4>
+          <p>Brent <b data-source="headline" data-field="brent_start" data-row="0">—</b>, WTI <b data-source="headline" data-field="wti_start" data-row="0">—</b>, a gap of <b data-source="headline" data-field="gap_start" data-row="0">—</b>. That is roughly the cost of shipping US oil across the Atlantic, so a refinery in our region paid about the same for local or imported oil. Nothing to fix.</p>
+        </div>
+        <div class="box">
+          <h4>Stress day: now</h4>
+          <p>Brent <b data-source="headline" data-field="brent_last" data-row="0">—</b>, WTI <b data-source="headline" data-field="wti_last" data-row="0">—</b>, a gap of <b data-source="headline" data-field="gap_last" data-row="0">—</b>. Oil outside the US is scarce, and US ports and tankers are already full, so the gap stays wide. For every 1 million barrels, our region pays about <b data-source="headline" data-field="gap_last" data-row="0">—</b> million more than a US buyer.</p>
+        </div>
+      </div>
+      <div class="means" id="gap-means" data-source="headline"></div>
+    </div>
+  </section>
+
+  <section id="forecasts">
+    <h2 class="sec-h">Forecasts versus what happened</h2>
+    <div class="card">
+      <h3>What forecasters expected <span class="info" tabindex="0" data-tip="Published forecasts from banks, agencies and analysts. Each dot is a forecast; the ring is the actual figure to compare it with: the year's average so far, the October average so far, or the latest price.">i</span></h3>
+      <p class="note">Dot: the forecast. Ring: the actual figure so far for the same measure. Most forecasts were made in March and April, early in the crisis.</p>
+      <div class="legend" id="fc-legend"></div>
+      <div class="chart sm dash-skeleton" id="fc-chart" data-source="forecasts headline"></div>
+      <div class="means" id="fc-means" data-source="headline"></div>
+    </div>
+  </section>
+
+  <section id="events">
+    <h2 class="sec-h">Key events</h2>
+    <div class="card">
+      <p class="note" style="margin-top:0">The numbers match the circles on the daily price chart. Each event links to its news source.</p>
+      <div class="tbl">
+        <table id="events-table" data-source="events" data-row-key="date">
+          <thead><tr>
+            <th data-field="n">#</th>
+            <th data-field="date">Date</th>
+            <th data-field="title" class="txt">Event</th>
+            <th data-field="detail" class="txt">What happened</th>
+            <th data-field="source" class="txt">Source</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="syria">
+    <h2 class="sec-h">What it means for Syria</h2>
+    <div class="card">
+      <h3>Oil price pressure on Syria: <span id="ssf-rag" data-source="headline">—</span></h3>
+      <p class="note">An assessment based on the figures above, for discussion. It is not a forecast and does not represent the view of any institution.</p>
+      <ul class="plain" id="ssf-list" data-source="headline"></ul>
+    </div>
+  </section>
+
+  <section id="method">
+    <h2 class="sec-h">Terms, sources and method</h2>
+    <div class="card">
+      <div class="gloss">
+        <div><b>Brent / WTI:</b> the world oil price and the American oil price. Codes BZ=F and CL=F on Yahoo Finance.</div>
+        <div><b>Futures price:</b> the agreed price today for oil delivered next month. This is the price quoted in the news. The physical cargo price ("Dated Brent") can be higher in a crisis; it reached a record of about $145 in April.</div>
+        <div><b>Per barrel (bbl):</b> one barrel is 159 litres.</div>
+        <div><b>Moving average (20-day, 50-day):</b> the average price over the last 20 or 50 trading days. Price above both means the recent trend is up.</div>
+        <div><b>Volatility:</b> standard deviation of daily price changes over 21 trading days, multiplied by √252 to give a yearly figure.</div>
+        <div><b>Drawdown:</b> the percentage by which the price is below its highest close so far this year.</div>
+        <div><b>US shale cost floor (about $62):</b> a rough cost of drilling a new US shale well, from industry surveys before 2026. Below it, US drilling slows and supply shrinks over months. It is a reference line, not a forecast.</div>
+        <div><b>Data:</b> daily closing prices from Yahoo Finance; 194 trading days from 2 January to 9 October 2026, US exchange holidays excluded. Prices were checked against Reuters, Bloomberg and TASS reports. Events and forecasts link to their sources.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>window.__DATA__={"daily":[{"brent":60.75,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-02","drawdown":0.0,"gap":3.43,"vol30":null,"wti":57.32},{"brent":61.76,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-05","drawdown":0.0,"gap":3.44,"vol30":null,"wti":58.32},{"brent":60.7,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-06","drawdown":-1.7,"gap":3.57,"vol30":null,"wti":57.13},{"brent":59.96,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-07","drawdown":-2.9,"gap":3.97,"vol30":null,"wti":55.99},{"brent":61.99,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-08","drawdown":0.0,"gap":4.23,"vol30":null,"wti":57.76},{"brent":63.34,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-09","drawdown":0.0,"gap":4.22,"vol30":null,"wti":59.12},{"brent":63.87,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-12","drawdown":0.0,"gap":4.37,"vol30":null,"wti":59.5},{"brent":65.47,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-13","drawdown":0.0,"gap":4.32,"vol30":null,"wti":61.15},{"brent":66.52,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-14","drawdown":0.0,"gap":4.5,"vol30":null,"wti":62.02},{"brent":63.76,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-15","drawdown":-4.1,"gap":4.57,"vol30":null,"wti":59.19},{"brent":64.13,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-16","drawdown":-3.6,"gap":4.69,"vol30":null,"wti":59.44},{"brent":64.92,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-20","drawdown":-2.4,"gap":4.58,"vol30":null,"wti":60.34},{"brent":65.24,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-21","drawdown":-1.9,"gap":4.62,"vol30":null,"wti":60.62},{"brent":64.06,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-22","drawdown":-3.7,"gap":4.7,"vol30":null,"wti":59.36},{"brent":65.88,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-23","drawdown":-1.0,"gap":4.81,"vol30":null,"wti":61.07},{"brent":65.59,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-26","drawdown":-1.4,"gap":4.96,"vol30":null,"wti":60.63},{"brent":67.57,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-27","drawdown":0.0,"gap":5.18,"vol30":null,"wti":62.39},{"brent":68.4,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-28","drawdown":0.0,"gap":5.19,"vol30":null,"wti":63.21},{"brent":70.71,"brent_ma20":null,"brent_ma50":null,"date":"2026-01-29","drawdown":0.0,"gap":5.29,"vol30":null,"wti":65.42},{"brent":70.69,"brent_ma20":64.77,"brent_ma50":null,"date":"2026-01-30","drawdown":-0.0,"gap":5.48,"vol30":null,"wti":65.21},{"brent":66.3,"brent_ma20":65.04,"brent_ma50":null,"date":"2026-02-02","drawdown":-6.2,"gap":4.16,"vol30":null,"wti":62.14},{"brent":67.33,"brent_ma20":65.32,"brent_ma50":null,"date":"2026-02-03","drawdown":-4.8,"gap":4.12,"vol30":39.5,"wti":63.21},{"brent":69.46,"brent_ma20":65.76,"brent_ma50":null,"date":"2026-02-04","drawdown":-1.8,"gap":4.32,"vol30":40.3,"wti":65.14},{"brent":67.55,"brent_ma20":66.14,"brent_ma50":null,"date":"2026-02-05","drawdown":-4.5,"gap":4.26,"vol30":41.2,"wti":63.29},{"brent":68.05,"brent_ma20":66.44,"brent_ma50":null,"date":"2026-02-06","drawdown":-3.8,"gap":4.5,"vol30":40.7,"wti":63.55},{"brent":69.04,"brent_ma20":66.73,"brent_ma50":null,"date":"2026-02-09","drawdown":-2.4,"gap":4.68,"vol30":39.7,"wti":64.36},{"brent":68.8,"brent_ma20":66.97,"brent_ma50":null,"date":"2026-02-10","drawdown":-2.7,"gap":4.84,"vol30":39.3,"wti":63.96},{"brent":69.4,"brent_ma20":67.17,"brent_ma50":null,"date":"2026-02-11","drawdown":-1.9,"gap":4.77,"vol30":39.3,"wti":64.63},{"brent":67.52,"brent_ma20":67.22,"brent_ma50":null,"date":"2026-02-12","drawdown":-4.5,"gap":4.68,"vol30":40.0,"wti":62.84},{"brent":67.75,"brent_ma20":67.42,"brent_ma50":null,"date":"2026-02-13","drawdown":-4.2,"gap":4.86,"vol30":39.6,"wti":62.89},{"brent":67.42,"brent_ma20":67.58,"brent_ma50":null,"date":"2026-02-17","drawdown":-4.7,"gap":5.09,"vol30":36.5,"wti":62.33},{"brent":70.35,"brent_ma20":67.86,"brent_ma50":null,"date":"2026-02-18","drawdown":-0.5,"gap":5.16,"vol30":39.0,"wti":65.19},{"brent":71.66,"brent_ma20":68.18,"brent_ma50":null,"date":"2026-02-19","drawdown":0.0,"gap":5.23,"vol30":39.2,"wti":66.43},{"brent":71.76,"brent_ma20":68.56,"brent_ma50":null,"date":"2026-02-20","drawdown":0.0,"gap":5.37,"vol30":39.3,"wti":66.39},{"brent":71.49,"brent_ma20":68.84,"brent_ma50":null,"date":"2026-02-23","drawdown":-0.4,"gap":5.18,"vol30":38.5,"wti":66.31},{"brent":70.77,"brent_ma20":69.1,"brent_ma50":null,"date":"2026-02-24","drawdown":-1.4,"gap":5.14,"vol30":37.9,"wti":65.63},{"brent":70.85,"brent_ma20":69.26,"brent_ma50":null,"date":"2026-02-25","drawdown":-1.3,"gap":5.43,"vol30":37.8,"wti":65.42},{"brent":70.75,"brent_ma20":69.38,"brent_ma50":null,"date":"2026-02-26","drawdown":-1.4,"gap":5.54,"vol30":36.6,"wti":65.21},{"brent":72.48,"brent_ma20":69.47,"brent_ma50":null,"date":"2026-02-27","drawdown":0.0,"gap":5.46,"vol30":37.3,"wti":67.02},{"brent":77.74,"brent_ma20":69.82,"brent_ma50":null,"date":"2026-03-02","drawdown":0.0,"gap":6.51,"vol30":42.8,"wti":71.23},{"brent":81.4,"brent_ma20":70.58,"brent_ma50":null,"date":"2026-03-03","drawdown":0.0,"gap":6.84,"vol30":45.1,"wti":74.56},{"brent":81.4,"brent_ma20":71.28,"brent_ma50":null,"date":"2026-03-04","drawdown":0.0,"gap":6.74,"vol30":37.2,"wti":74.66},{"brent":85.41,"brent_ma20":72.08,"brent_ma50":null,"date":"2026-03-05","drawdown":0.0,"gap":4.4,"vol30":39.5,"wti":81.01},{"brent":92.69,"brent_ma20":73.34,"brent_ma50":null,"date":"2026-03-06","drawdown":0.0,"gap":1.79,"vol30":46.1,"wti":90.9},{"brent":98.96,"brent_ma20":74.88,"brent_ma50":null,"date":"2026-03-09","drawdown":0.0,"gap":4.19,"vol30":46.8,"wti":94.77},{"brent":87.8,"brent_ma20":75.82,"brent_ma50":null,"date":"2026-03-10","drawdown":-11.3,"gap":4.35,"vol30":66.9,"wti":83.45},{"brent":91.98,"brent_ma20":76.98,"brent_ma50":null,"date":"2026-03-11","drawdown":-7.1,"gap":4.73,"vol30":67.9,"wti":87.25},{"brent":100.46,"brent_ma20":78.53,"brent_ma50":null,"date":"2026-03-12","drawdown":0.0,"gap":4.73,"vol30":72.3,"wti":95.73},{"brent":103.14,"brent_ma20":80.31,"brent_ma50":null,"date":"2026-03-13","drawdown":0.0,"gap":4.43,"vol30":72.3,"wti":98.71},{"brent":100.21,"brent_ma20":81.94,"brent_ma50":72.3,"date":"2026-03-16","drawdown":-2.8,"gap":6.71,"vol30":72.4,"wti":93.5},{"brent":103.42,"brent_ma20":83.74,"brent_ma50":73.16,"date":"2026-03-17","drawdown":0.0,"gap":7.21,"vol30":72.3,"wti":96.21},{"brent":107.38,"brent_ma20":85.59,"brent_ma50":74.07,"date":"2026-03-18","drawdown":0.0,"gap":11.06,"vol30":71.9,"wti":96.32},{"brent":108.65,"brent_ma20":87.44,"brent_ma50":75.03,"date":"2026-03-19","drawdown":0.0,"gap":12.51,"vol30":71.6,"wti":96.14},{"brent":112.19,"brent_ma20":89.46,"brent_ma50":76.07,"date":"2026-03-20","drawdown":0.0,"gap":13.87,"vol30":71.7,"wti":98.32},{"brent":99.94,"brent_ma20":90.88,"brent_ma50":76.83,"date":"2026-03-23","drawdown":-10.9,"gap":11.81,"vol30":85.9,"wti":88.13},{"brent":104.49,"brent_ma20":92.57,"brent_ma50":77.66,"date":"2026-03-24","drawdown":-6.9,"gap":12.14,"vol30":86.1,"wti":92.35},{"brent":102.22,"brent_ma20":94.14,"brent_ma50":78.42,"date":"2026-03-25","drawdown":-8.9,"gap":11.9,"vol30":86.7,"wti":90.32},{"brent":108.01,"brent_ma20":96.0,"brent_ma50":79.27,"date":"2026-03-26","drawdown":-3.7,"gap":13.53,"vol30":87.4,"wti":94.48},{"brent":112.57,"brent_ma20":98.0,"brent_ma50":80.19,"date":"2026-03-27","drawdown":0.0,"gap":12.93,"vol30":87.4,"wti":99.64},{"brent":112.78,"brent_ma20":99.76,"brent_ma50":81.18,"date":"2026-03-30","drawdown":0.0,"gap":9.9,"vol30":87.6,"wti":102.88},{"brent":118.35,"brent_ma20":101.6,"brent_ma50":82.26,"date":"2026-03-31","drawdown":0.0,"gap":16.97,"vol30":86.4,"wti":101.38},{"brent":101.16,"brent_ma20":102.59,"brent_ma50":82.98,"date":"2026-04-01","drawdown":-14.5,"gap":1.04,"vol30":105.3,"wti":100.12},{"brent":109.03,"brent_ma20":103.77,"brent_ma50":83.86,"date":"2026-04-02","drawdown":-7.9,"gap":-2.51,"vol30":107.5,"wti":111.54},{"brent":109.77,"brent_ma20":104.63,"brent_ma50":84.77,"date":"2026-04-06","drawdown":-7.2,"gap":-2.64,"vol30":106.8,"wti":112.41},{"brent":109.27,"brent_ma20":105.14,"brent_ma50":85.64,"date":"2026-04-07","drawdown":-7.7,"gap":-3.68,"vol30":103.8,"wti":112.95},{"brent":94.75,"brent_ma20":105.49,"brent_ma50":86.23,"date":"2026-04-08","drawdown":-19.9,"gap":0.34,"vol30":113.8,"wti":94.41},{"brent":95.92,"brent_ma20":105.69,"brent_ma50":86.79,"date":"2026-04-09","drawdown":-19.0,"gap":-1.95,"vol30":105.5,"wti":97.87},{"brent":95.2,"brent_ma20":105.42,"brent_ma50":87.33,"date":"2026-04-10","drawdown":-19.6,"gap":-1.37,"vol30":104.4,"wti":96.57},{"brent":99.36,"brent_ma20":105.23,"brent_ma50":87.9,"date":"2026-04-13","drawdown":-16.0,"gap":0.28,"vol30":100.8,"wti":99.08},{"brent":94.79,"brent_ma20":104.96,"brent_ma50":88.38,"date":"2026-04-14","drawdown":-19.9,"gap":3.51,"vol30":101.6,"wti":91.28},{"brent":94.93,"brent_ma20":104.54,"brent_ma50":88.96,"date":"2026-04-15","drawdown":-19.8,"gap":3.64,"vol30":101.2,"wti":91.29},{"brent":99.39,"brent_ma20":104.14,"brent_ma50":89.6,"date":"2026-04-16","drawdown":-16.0,"gap":4.7,"vol30":101.9,"wti":94.69},{"brent":90.38,"brent_ma20":103.22,"brent_ma50":90.02,"date":"2026-04-17","drawdown":-23.6,"gap":6.53,"vol30":105.7,"wti":83.85},{"brent":95.48,"brent_ma20":102.39,"brent_ma50":90.57,"date":"2026-04-20","drawdown":-19.3,"gap":5.87,"vol30":107.8,"wti":89.61},{"brent":98.48,"brent_ma20":102.32,"brent_ma50":91.18,"date":"2026-04-21","drawdown":-16.8,"gap":6.35,"vol30":107.7,"wti":92.13},{"brent":101.91,"brent_ma20":102.19,"brent_ma50":91.84,"date":"2026-04-22","drawdown":-13.9,"gap":8.95,"vol30":100.8,"wti":92.96},{"brent":105.07,"brent_ma20":102.33,"brent_ma50":92.57,"date":"2026-04-23","drawdown":-11.2,"gap":9.22,"vol30":100.2,"wti":95.85},{"brent":105.33,"brent_ma20":102.2,"brent_ma50":93.28,"date":"2026-04-24","drawdown":-11.0,"gap":10.93,"vol30":99.9,"wti":94.4},{"brent":108.23,"brent_ma20":101.98,"brent_ma50":94.1,"date":"2026-04-27","drawdown":-8.6,"gap":11.86,"vol30":98.4,"wti":96.37},{"brent":111.26,"brent_ma20":101.9,"brent_ma50":94.97,"date":"2026-04-28","drawdown":-6.0,"gap":11.33,"vol30":97.8,"wti":99.93},{"brent":118.03,"brent_ma20":101.89,"brent_ma50":95.98,"date":"2026-04-29","drawdown":-0.3,"gap":11.15,"vol30":100.0,"wti":106.88},{"brent":114.01,"brent_ma20":102.53,"brent_ma50":96.85,"date":"2026-04-30","drawdown":-3.7,"gap":8.94,"vol30":99.3,"wti":105.07},{"brent":108.17,"brent_ma20":102.49,"brent_ma50":97.58,"date":"2026-05-01","drawdown":-8.6,"gap":6.23,"vol30":84.2,"wti":101.94},{"brent":114.44,"brent_ma20":102.72,"brent_ma50":98.44,"date":"2026-05-04","drawdown":-3.3,"gap":8.02,"vol30":82.4,"wti":106.42},{"brent":109.87,"brent_ma20":102.75,"brent_ma50":99.21,"date":"2026-05-05","drawdown":-7.2,"gap":7.6,"vol30":83.7,"wti":102.27},{"brent":101.27,"brent_ma20":103.08,"brent_ma50":99.82,"date":"2026-05-06","drawdown":-14.4,"gap":6.19,"vol30":88.4,"wti":95.08},{"brent":100.06,"brent_ma20":103.28,"brent_ma50":100.4,"date":"2026-05-07","drawdown":-15.5,"gap":5.25,"vol30":72.7,"wti":94.81},{"brent":101.29,"brent_ma20":103.59,"brent_ma50":101.01,"date":"2026-05-08","drawdown":-14.4,"gap":5.87,"vol30":72.7,"wti":95.42},{"brent":104.21,"brent_ma20":103.83,"brent_ma50":101.64,"date":"2026-05-11","drawdown":-11.9,"gap":6.14,"vol30":73.1,"wti":98.07},{"brent":107.77,"brent_ma20":104.48,"brent_ma50":102.25,"date":"2026-05-12","drawdown":-8.9,"gap":5.59,"vol30":72.6,"wti":102.18},{"brent":105.63,"brent_ma20":105.01,"brent_ma50":102.73,"date":"2026-05-13","drawdown":-10.7,"gap":4.61,"vol30":70.8,"wti":101.02},{"brent":105.72,"brent_ma20":105.33,"brent_ma50":103.22,"date":"2026-05-14","drawdown":-10.7,"gap":4.55,"vol30":70.8,"wti":101.17},{"brent":109.26,"brent_ma20":106.27,"brent_ma50":103.69,"date":"2026-05-15","drawdown":-7.7,"gap":3.84,"vol30":70.0,"wti":105.42},{"brent":112.1,"brent_ma20":107.11,"brent_ma50":104.08,"date":"2026-05-18","drawdown":-5.3,"gap":3.44,"vol30":60.1,"wti":108.66},{"brent":111.28,"brent_ma20":107.75,"brent_ma50":104.33,"date":"2026-05-19","drawdown":-6.0,"gap":3.51,"vol30":58.1,"wti":107.77},{"brent":105.02,"brent_ma20":107.9,"brent_ma50":104.67,"date":"2026-05-20","drawdown":-11.3,"gap":6.76,"vol30":61.6,"wti":98.26},{"brent":102.58,"brent_ma20":107.78,"brent_ma50":104.88,"date":"2026-05-21","drawdown":-13.3,"gap":6.23,"vol30":61.2,"wti":96.35},{"brent":103.54,"brent_ma20":107.69,"brent_ma50":104.95,"date":"2026-05-22","drawdown":-12.5,"gap":6.94,"vol30":60.3,"wti":96.6},{"brent":99.58,"brent_ma20":107.25,"brent_ma50":104.88,"date":"2026-05-26","drawdown":-15.9,"gap":5.69,"vol30":61.7,"wti":93.89},{"brent":94.29,"brent_ma20":106.41,"brent_ma50":104.76,"date":"2026-05-27","drawdown":-20.3,"gap":5.61,"vol30":63.2,"wti":88.68},{"brent":93.71,"brent_ma20":105.19,"brent_ma50":104.56,"date":"2026-05-28","drawdown":-20.8,"gap":4.81,"vol30":62.0,"wti":88.9},{"brent":92.05,"brent_ma20":104.09,"brent_ma50":104.26,"date":"2026-05-29","drawdown":-22.2,"gap":4.69,"vol30":57.0,"wti":87.36},{"brent":94.98,"brent_ma20":103.43,"brent_ma50":103.98,"date":"2026-06-01","drawdown":-19.7,"gap":2.82,"vol30":58.2,"wti":92.16},{"brent":96.0,"brent_ma20":102.51,"brent_ma50":103.66,"date":"2026-06-02","drawdown":-18.9,"gap":2.24,"vol30":56.3,"wti":93.76},{"brent":97.81,"brent_ma20":101.91,"brent_ma50":103.62,"date":"2026-06-03","drawdown":-17.4,"gap":1.79,"vol30":52.5,"wti":96.02},{"brent":95.03,"brent_ma20":101.6,"brent_ma50":103.43,"date":"2026-06-04","drawdown":-19.7,"gap":1.99,"vol30":51.7,"wti":93.04},{"brent":93.09,"brent_ma20":101.25,"brent_ma50":103.24,"date":"2026-06-05","drawdown":-21.3,"gap":2.55,"vol30":44.4,"wti":90.54},{"brent":94.25,"brent_ma20":100.9,"brent_ma50":102.97,"date":"2026-06-08","drawdown":-20.4,"gap":2.95,"vol30":44.6,"wti":91.3},{"brent":91.45,"brent_ma20":100.26,"brent_ma50":102.55,"date":"2026-06-09","drawdown":-22.7,"gap":3.25,"vol30":45.3,"wti":88.2},{"brent":93.1,"brent_ma20":99.52,"brent_ma50":102.15,"date":"2026-06-10","drawdown":-21.3,"gap":3.07,"vol30":44.4,"wti":90.03},{"brent":90.38,"brent_ma20":98.76,"brent_ma50":101.59,"date":"2026-06-11","drawdown":-23.6,"gap":2.67,"vol30":42.8,"wti":87.71},{"brent":87.33,"brent_ma20":97.84,"brent_ma50":101.32,"date":"2026-06-12","drawdown":-26.2,"gap":2.45,"vol30":43.6,"wti":84.88},{"brent":83.17,"brent_ma20":96.54,"brent_ma50":100.8,"date":"2026-06-15","drawdown":-29.7,"gap":2.42,"vol30":45.5,"wti":80.75},{"brent":78.96,"brent_ma20":94.88,"brent_ma50":100.18,"date":"2026-06-16","drawdown":-33.3,"gap":2.91,"vol30":44.6,"wti":76.05},{"brent":79.55,"brent_ma20":93.29,"brent_ma50":99.59,"date":"2026-06-17","drawdown":-32.8,"gap":2.76,"vol30":42.9,"wti":76.79},{"brent":79.85,"brent_ma20":92.04,"brent_ma50":99.29,"date":"2026-06-18","drawdown":-32.5,"gap":3.25,"vol30":43.3,"wti":76.6},{"brent":77.9,"brent_ma20":90.8,"brent_ma50":98.93,"date":"2026-06-22","drawdown":-34.2,"gap":3.08,"vol30":40.7,"wti":74.82},{"brent":77.08,"brent_ma20":89.48,"brent_ma50":98.57,"date":"2026-06-23","drawdown":-34.9,"gap":3.87,"vol30":40.6,"wti":73.21},{"brent":73.74,"brent_ma20":88.19,"brent_ma50":98.06,"date":"2026-06-24","drawdown":-37.7,"gap":3.4,"vol30":41.0,"wti":70.34},{"brent":75.26,"brent_ma20":87.23,"brent_ma50":97.67,"date":"2026-06-25","drawdown":-36.4,"gap":3.34,"vol30":42.0,"wti":71.92},{"brent":71.99,"brent_ma20":86.15,"brent_ma50":97.21,"date":"2026-06-26","drawdown":-39.2,"gap":2.76,"vol30":40.9,"wti":69.23},{"brent":73.15,"brent_ma20":85.2,"brent_ma50":96.68,"date":"2026-06-29","drawdown":-38.2,"gap":2.4,"vol30":42.0,"wti":70.75},{"brent":72.92,"brent_ma20":84.1,"brent_ma50":96.33,"date":"2026-06-30","drawdown":-38.4,"gap":3.42,"vol30":42.1,"wti":69.5},{"brent":71.57,"brent_ma20":82.88,"brent_ma50":95.85,"date":"2026-07-01","drawdown":-39.5,"gap":2.99,"vol30":39.2,"wti":68.58},{"brent":71.8,"brent_ma20":81.58,"brent_ma50":95.32,"date":"2026-07-02","drawdown":-39.3,"gap":3.11,"vol30":38.7,"wti":68.69},{"brent":71.99,"brent_ma20":80.43,"brent_ma50":94.72,"date":"2026-07-06","drawdown":-39.2,"gap":3.44,"vol30":37.4,"wti":68.55},{"brent":74.16,"brent_ma20":79.48,"brent_ma50":94.1,"date":"2026-07-07","drawdown":-37.3,"gap":3.72,"vol30":40.0,"wti":70.44},{"brent":78.02,"brent_ma20":78.67,"brent_ma50":93.56,"date":"2026-07-08","drawdown":-34.1,"gap":4.5,"vol30":45.3,"wti":73.52},{"brent":76.3,"brent_ma20":77.91,"brent_ma50":92.92,"date":"2026-07-09","drawdown":-35.5,"gap":4.22,"vol30":44.9,"wti":72.08},{"brent":76.01,"brent_ma20":77.06,"brent_ma50":92.21,"date":"2026-07-10","drawdown":-35.8,"gap":4.6,"vol30":44.3,"wti":71.41},{"brent":83.3,"brent_ma20":76.7,"brent_ma50":91.52,"date":"2026-07-13","drawdown":-29.6,"gap":5.16,"vol30":55.8,"wti":78.14},{"brent":84.73,"brent_ma20":76.57,"brent_ma50":90.93,"date":"2026-07-14","drawdown":-28.4,"gap":5.39,"vol30":55.5,"wti":79.34},{"brent":84.95,"brent_ma20":76.66,"brent_ma50":90.47,"date":"2026-07-15","drawdown":-28.2,"gap":5.35,"vol30":54.4,"wti":79.6},{"brent":84.23,"brent_ma20":76.92,"brent_ma50":89.87,"date":"2026-07-16","drawdown":-28.8,"gap":5.28,"vol30":51.7,"wti":78.95},{"brent":88.1,"brent_ma20":77.35,"brent_ma50":89.43,"date":"2026-07-17","drawdown":-25.6,"gap":5.61,"vol30":50.1,"wti":82.49},{"brent":89.22,"brent_ma20":77.82,"brent_ma50":89.19,"date":"2026-07-20","drawdown":-24.6,"gap":5.99,"vol30":50.2,"wti":83.23},{"brent":91.01,"brent_ma20":78.48,"brent_ma50":89.01,"date":"2026-07-21","drawdown":-23.1,"gap":6.1,"vol30":50.4,"wti":84.91},{"brent":94.07,"brent_ma20":79.33,"brent_ma50":88.86,"date":"2026-07-22","drawdown":-20.5,"gap":7.24,"vol30":49.9,"wti":86.83},{"brent":100.69,"brent_ma20":80.67,"brent_ma50":88.79,"date":"2026-07-23","drawdown":-14.9,"gap":8.5,"vol30":53.4,"wti":92.19},{"brent":96.78,"brent_ma20":81.75,"brent_ma50":88.57,"date":"2026-07-24","drawdown":-18.2,"gap":7.47,"vol30":52.8,"wti":89.31},{"brent":88.36,"brent_ma20":82.57,"brent_ma50":88.23,"date":"2026-07-27","drawdown":-25.3,"gap":5.75,"vol30":63.7,"wti":82.61},{"brent":84.09,"brent_ma20":83.12,"brent_ma50":87.8,"date":"2026-07-28","drawdown":-28.9,"gap":4.83,"vol30":64.3,"wti":79.26},{"brent":90.74,"brent_ma20":84.01,"brent_ma50":87.43,"date":"2026-07-29","drawdown":-23.3,"gap":6.28,"vol30":68.5,"wti":84.46},{"brent":89.03,"brent_ma20":84.88,"brent_ma50":86.96,"date":"2026-07-30","drawdown":-24.8,"gap":5.44,"vol30":69.1,"wti":83.59},{"brent":90.12,"brent_ma20":85.8,"brent_ma50":86.54,"date":"2026-07-31","drawdown":-23.9,"gap":5.45,"vol30":68.4,"wti":84.67},{"brent":83.77,"brent_ma20":86.38,"brent_ma50":86.12,"date":"2026-08-03","drawdown":-29.2,"gap":3.43,"vol30":74.3,"wti":80.34},{"brent":79.36,"brent_ma20":86.64,"brent_ma50":85.65,"date":"2026-08-04","drawdown":-32.9,"gap":3.59,"vol30":77.3,"wti":75.77},{"brent":79.45,"brent_ma20":86.72,"brent_ma50":85.17,"date":"2026-08-05","drawdown":-32.9,"gap":4.23,"vol30":76.8,"wti":75.22},{"brent":82.49,"brent_ma20":87.02,"brent_ma50":84.83,"date":"2026-08-06","drawdown":-30.3,"gap":5.2,"vol30":75.9,"wti":77.29},{"brent":83.55,"brent_ma20":87.4,"brent_ma50":84.61,"date":"2026-08-07","drawdown":-29.4,"gap":5.37,"vol30":75.4,"wti":78.18},{"brent":87.72,"brent_ma20":87.62,"brent_ma50":84.49,"date":"2026-08-10","drawdown":-25.9,"gap":5.59,"vol30":76.9,"wti":82.13},{"brent":88.91,"brent_ma20":87.83,"brent_ma50":84.43,"date":"2026-08-11","drawdown":-24.9,"gap":5.71,"vol30":70.5,"wti":83.2},{"brent":88.98,"brent_ma20":88.03,"brent_ma50":84.31,"date":"2026-08-12","drawdown":-24.8,"gap":5.71,"vol30":70.3,"wti":83.27},{"brent":87.07,"brent_ma20":88.18,"brent_ma50":84.13,"date":"2026-08-13","drawdown":-26.4,"gap":5.82,"vol30":70.8,"wti":81.25},{"brent":88.52,"brent_ma20":88.2,"brent_ma50":83.95,"date":"2026-08-14","drawdown":-25.2,"gap":6.12,"vol30":70.9,"wti":82.4},{"brent":90.87,"brent_ma20":88.28,"brent_ma50":83.86,"date":"2026-08-17","drawdown":-23.2,"gap":6.37,"vol30":69.8,"wti":84.5},{"brent":91.02,"brent_ma20":88.28,"brent_ma50":83.82,"date":"2026-08-18","drawdown":-23.1,"gap":6.08,"vol30":69.7,"wti":84.94},{"brent":91.62,"brent_ma20":88.16,"brent_ma50":83.77,"date":"2026-08-19","drawdown":-22.6,"gap":5.79,"vol30":69.4,"wti":85.83},{"brent":93.78,"brent_ma20":87.81,"brent_ma50":83.82,"date":"2026-08-20","drawdown":-20.8,"gap":5.95,"vol30":68.9,"wti":87.83},{"brent":94.39,"brent_ma20":87.69,"brent_ma50":83.84,"date":"2026-08-21","drawdown":-20.2,"gap":7.33,"vol30":64.3,"wti":87.06},{"brent":92.17,"brent_ma20":87.88,"brent_ma50":83.88,"date":"2026-08-24","drawdown":-22.1,"gap":7.16,"vol30":63.4,"wti":85.01},{"brent":88.58,"brent_ma20":88.11,"brent_ma50":83.9,"date":"2026-08-25","drawdown":-25.2,"gap":6.22,"vol30":56.5,"wti":82.36},{"brent":87.84,"brent_ma20":87.96,"brent_ma50":84.0,"date":"2026-08-26","drawdown":-25.8,"gap":5.61,"vol30":53.7,"wti":82.23},{"brent":89.7,"brent_ma20":88.0,"brent_ma50":84.21,"date":"2026-08-27","drawdown":-24.2,"gap":6.17,"vol30":47.1,"wti":83.53},{"brent":89.31,"brent_ma20":87.96,"brent_ma50":84.41,"date":"2026-08-28","drawdown":-24.5,"gap":5.91,"vol30":46.7,"wti":83.4},{"brent":90.49,"brent_ma20":88.29,"brent_ma50":84.62,"date":"2026-08-31","drawdown":-23.5,"gap":4.73,"vol30":46.7,"wti":85.76},{"brent":94.65,"brent_ma20":89.06,"brent_ma50":84.95,"date":"2026-09-01","drawdown":-20.0,"gap":4.43,"vol30":40.9,"wti":90.22},{"brent":95.63,"brent_ma20":89.86,"brent_ma50":85.32,"date":"2026-09-02","drawdown":-19.2,"gap":4.62,"vol30":34.6,"wti":91.01},{"brent":95.52,"brent_ma20":90.52,"brent_ma50":85.76,"date":"2026-09-03","drawdown":-19.3,"gap":4.22,"vol30":34.7,"wti":91.3},{"brent":96.28,"brent_ma20":91.15,"brent_ma50":86.18,"date":"2026-09-04","drawdown":-18.6,"gap":4.8,"vol30":33.1,"wti":91.48},{"brent":97.92,"brent_ma20":91.66,"brent_ma50":86.7,"date":"2026-09-08","drawdown":-17.3,"gap":4.89,"vol30":33.2,"wti":93.03},{"brent":101.21,"brent_ma20":92.28,"brent_ma50":87.26,"date":"2026-09-09","drawdown":-14.5,"gap":5.16,"vol30":31.1,"wti":96.05},{"brent":107.63,"brent_ma20":93.21,"brent_ma50":87.95,"date":"2026-09-10","drawdown":-9.1,"gap":5.15,"vol30":36.4,"wti":102.48},{"brent":104.61,"brent_ma20":94.09,"brent_ma50":88.61,"date":"2026-09-11","drawdown":-11.6,"gap":4.56,"vol30":38.6,"wti":100.05},{"brent":105.68,"brent_ma20":94.94,"brent_ma50":89.29,"date":"2026-09-14","drawdown":-10.7,"gap":4.29,"vol30":37.1,"wti":101.39},{"brent":108.75,"brent_ma20":95.84,"brent_ma50":90.03,"date":"2026-09-15","drawdown":-8.1,"gap":2.92,"vol30":37.6,"wti":105.83},{"brent":105.83,"brent_ma20":96.58,"brent_ma50":90.66,"date":"2026-09-16","drawdown":-10.6,"gap":3.4,"vol30":39.2,"wti":102.43},{"brent":104.82,"brent_ma20":97.24,"brent_ma50":91.2,"date":"2026-09-17","drawdown":-11.4,"gap":2.91,"vol30":39.6,"wti":101.91},{"brent":103.87,"brent_ma20":97.74,"brent_ma50":91.75,"date":"2026-09-18","drawdown":-12.2,"gap":3.57,"vol30":40.0,"wti":100.3},{"brent":100.34,"brent_ma20":98.04,"brent_ma50":92.24,"date":"2026-09-21","drawdown":-15.2,"gap":4.56,"vol30":41.8,"wti":95.78},{"brent":99.25,"brent_ma20":98.4,"brent_ma50":92.55,"date":"2026-09-22","drawdown":-16.1,"gap":4.66,"vol30":42.1,"wti":94.59},{"brent":103.08,"brent_ma20":99.12,"brent_ma50":92.92,"date":"2026-09-23","drawdown":-12.9,"gap":10.92,"vol30":42.6,"wti":92.16},{"brent":106.6,"brent_ma20":100.06,"brent_ma50":93.35,"date":"2026-09-24","drawdown":-9.9,"gap":11.99,"vol30":40.4,"wti":94.61},{"brent":104.32,"brent_ma20":100.79,"brent_ma50":93.76,"date":"2026-09-25","drawdown":-11.9,"gap":11.91,"vol30":41.3,"wti":92.41},{"brent":105.28,"brent_ma20":101.59,"brent_ma50":94.1,"date":"2026-09-28","drawdown":-11.0,"gap":12.68,"vol30":41.1,"wti":92.6},{"brent":102.59,"brent_ma20":102.19,"brent_ma50":94.37,"date":"2026-09-29","drawdown":-13.3,"gap":13.21,"vol30":42.5,"wti":89.38},{"brent":103.53,"brent_ma20":102.64,"brent_ma50":94.62,"date":"2026-09-30","drawdown":-12.5,"gap":13.11,"vol30":42.5,"wti":90.42},{"brent":102.31,"brent_ma20":102.97,"brent_ma50":94.78,"date":"2026-10-01","drawdown":-13.6,"gap":9.44,"vol30":40.5,"wti":92.87},{"brent":102.25,"brent_ma20":103.31,"brent_ma50":94.81,"date":"2026-10-02","drawdown":-13.6,"gap":11.14,"vol30":40.4,"wti":91.11},{"brent":100.32,"brent_ma20":103.51,"brent_ma50":94.88,"date":"2026-10-05","drawdown":-15.2,"gap":10.89,"vol30":41.2,"wti":89.43},{"brent":100.58,"brent_ma20":103.64,"brent_ma50":95.13,"date":"2026-10-06","drawdown":-15.0,"gap":11.14,"vol30":41.1,"wti":89.44},{"brent":100.2,"brent_ma20":103.59,"brent_ma50":95.45,"date":"2026-10-07","drawdown":-15.3,"gap":11.92,"vol30":40.8,"wti":88.28},{"brent":104.28,"brent_ma20":103.42,"brent_ma50":95.72,"date":"2026-10-08","drawdown":-11.9,"gap":12.79,"vol30":41.5,"wti":91.49},{"brent":104.72,"brent_ma20":103.43,"brent_ma50":96.04,"date":"2026-10-09","drawdown":-11.5,"gap":12.87,"vol30":35.4,"wti":91.85}],"events":[{"date":"2026-03-02","detail":"US\u2013Israeli strikes on Iran disrupt shipping through the Strait of Hormuz. Brent jumps about 7% on the first trading day.","n":1,"source":"Reuters via The News","title":"War shock begins","url":"https://www.thenews.pk/story/1410765-crude-oil-tumbles-as-strait-of-hormuz-reopens-under-shadow-of-unresolved-conflict"},{"date":"2026-03-09","detail":"Brent spikes to about $116 at the open, then eases after G7 governments announce emergency oil releases.","n":2,"source":"Rystad Energy via Air Freight News","title":"G7 releases emergency stocks","url":"https://airfreight.news/articles/full/triple-digit-oil-temporary-spike-or-a-new-market-reality-rystad-energys-oil-market-update"},{"date":"2026-03-31","detail":"Brent ends March about 63% higher than it started the month.","n":3,"source":"MEXC News","title":"Biggest monthly rise since 1988","url":"https://www.mexc.com/news/997657"},{"date":"2026-04-08","detail":"The US and Iran agree a ceasefire. Brent falls as much as 17% during the day.","n":4,"source":"Bloomberg","title":"Two-week ceasefire","url":"https://news.bloombergtax.com/bloomberg-government-news/oil-and-gas-prices-plunge-after-us-and-iran-agree-to-a-ceasefire"},{"date":"2026-04-17","detail":"Iran says commercial ships may pass during the ceasefire. Brent falls 9.1% to $90.38.","n":5,"source":"Reuters via The News","title":"Hormuz declared open","url":"https://www.thenews.pk/story/1410765-crude-oil-tumbles-as-strait-of-hormuz-reopens-under-shadow-of-unresolved-conflict"},{"date":"2026-05-05","detail":"US forces try to force the strait open; the UAE reports missile and drone attacks from Iran.","n":6,"source":"Reuters via The Irish Times","title":"Ceasefire under strain","url":"https://www.irishtimes.com/business/markets/2026/05/05/oil-prices-slide-3-as-fragile-us-iran-ceasefire-holds/"},{"date":"2026-05-29","detail":"A tentative deal to extend the ceasefire and ease shipping limits. Brent falls about 11% over the week.","n":7,"source":"Reuters via GV Wire","title":"Ceasefire extension deal","url":"https://gvwire.com/2026/05/29/oil-falls-on-hopes-for-us-iran-ceasefire-agreement/"},{"date":"2026-07-13","detail":"Prices rebound sharply from the June lows as tensions return.","n":8,"source":"S&P Global","title":"US\u2013Iran tensions flare again","url":"https://www.spglobal.com/energy/en/news-research/latest-news/crude-oil/071226-ice-september-brent-opens-26-higher-at-7800b-as-us-iran-tensions-flare"},{"date":"2026-09-09","detail":"Fighting between the US and Iran escalates, ships are attacked near Hormuz, and Houthi strikes hit Saudi energy sites.","n":9,"source":"MercoPress","title":"Back above $100","url":"https://en.mercopress.com/2026/09/09/brent-climbs-back-above-us-100-to-its-highest-level-since-late-july"}],"forecasts":[{"compare_to":"ytd_avg","forecaster":"UBS","issued":"Mar 2026","measure":"2026 average","url":"https://www.itiger.com/news/1142027209","value":72},{"compare_to":"ytd_avg","forecaster":"Rystad: two-month war","issued":"Mar 2026","measure":"2026 average","url":"https://airfreight.news/articles/full/triple-digit-oil-temporary-spike-or-a-new-market-reality-rystad-energys-oil-market-update","value":87},{"compare_to":"ytd_avg","forecaster":"EIA (US government)","issued":"Apr 2026","measure":"2026 average","url":"https://www.energyintel.com/0000017b-a7dc-de4c-a17b-e7de764e0000","value":96},{"compare_to":"ytd_avg","forecaster":"Rystad: four-month war","issued":"Mar 2026","measure":"2026 average","url":"https://airfreight.news/articles/full/triple-digit-oil-temporary-spike-or-a-new-market-reality-rystad-energys-oil-market-update","value":100},{"compare_to":"q4_avg","forecaster":"Goldman Sachs","issued":"Mar 2026","measure":"Q4 2026 average","url":"https://www.idnfinancials.com/cn/news/61904/goldman-sachs-raises-oil-price-forecast-to-us100","value":66},{"compare_to":"latest","forecaster":"Kalshi traders","issued":"Oct 2026","measure":"Brent on 30 Oct (about 50% odds above)","url":"https://kalshi.com/markets/kxbrentmon/brent-monthly/kxbrentmon-26oct3017","value":97}],"headline":[{"as_of":"2026-10-09","brent_1w_chg":2.47,"brent_last":104.72,"brent_low":59.96,"brent_low_date":"2026-01-07","brent_ma20":103.43,"brent_ma50":96.04,"brent_peak":118.35,"brent_peak_date":"2026-03-31","brent_start":60.75,"brent_ytd_avg":89.62,"brent_ytd_pct":72.4,"gap_1w_chg":1.73,"gap_avg_ytd":5.61,"gap_last":12.87,"gap_max":16.97,"gap_max_date":"2026-03-31","gap_min":-3.68,"gap_min_date":"2026-04-07","gap_start":3.43,"max_drawdown":-39.5,"max_drawdown_date":"2026-07-01","q4_brent_avg":102.09,"trading_days":194.0,"vol30":35.4,"vol30_1w_chg":-5.0,"vol_ytd":61.3,"wti_1w_chg":0.74,"wti_last":91.85,"wti_start":57.32,"wti_ytd_avg":84.01,"wti_ytd_pct":60.2}],"monthly":[{"brent_avg":64.77,"brent_chg_pct":16.4,"brent_end":70.69,"brent_high":70.71,"brent_low":59.96,"gap_avg":4.51,"label":"Jan","month":"2026-01","wti_avg":60.26,"wti_end":65.21},{"brent_avg":69.41,"brent_chg_pct":2.5,"brent_end":72.48,"brent_high":72.48,"brent_low":66.3,"gap_avg":4.88,"label":"Feb","month":"2026-02","wti_avg":64.52,"wti_end":67.02},{"brent_avg":99.6,"brent_chg_pct":63.3,"brent_end":118.35,"brent_high":118.35,"brent_low":77.74,"gap_avg":8.6,"label":"Mar","month":"2026-03","wti_avg":91.0,"wti_end":101.38},{"brent_avg":102.46,"brent_chg_pct":-3.7,"brent_end":114.01,"brent_high":118.03,"brent_low":90.38,"gap_avg":4.4,"label":"Apr","month":"2026-04","wti_avg":98.06,"wti_end":105.07},{"brent_avg":104.09,"brent_chg_pct":-19.3,"brent_end":92.05,"brent_high":114.44,"brent_low":92.05,"gap_avg":5.58,"label":"May","month":"2026-05","wti_avg":98.51,"wti_end":87.36},{"brent_avg":84.62,"brent_chg_pct":-20.8,"brent_end":72.92,"brent_high":97.81,"brent_low":71.99,"gap_avg":2.83,"label":"Jun","month":"2026-06","wti_avg":81.79,"wti_end":69.5},{"brent_avg":84.51,"brent_chg_pct":23.6,"brent_end":90.12,"brent_high":100.69,"brent_low":71.57,"gap_avg":5.29,"label":"Jul","month":"2026-07","wti_avg":79.22,"wti_end":84.67},{"brent_avg":88.08,"brent_chg_pct":0.4,"brent_end":90.49,"brent_high":94.39,"brent_low":79.36,"gap_avg":5.62,"label":"Aug","month":"2026-08","wti_avg":82.45,"wti_end":85.76},{"brent_avg":102.26,"brent_chg_pct":14.4,"brent_end":103.53,"brent_high":108.75,"brent_low":94.65,"gap_avg":6.57,"label":"Sep","month":"2026-09","wti_avg":95.69,"wti_end":90.42},{"brent_avg":102.09,"brent_chg_pct":1.1,"brent_end":104.72,"brent_high":104.72,"brent_low":100.2,"gap_avg":11.46,"label":"Oct (to 9th)","month":"2026-10","wti_avg":90.64,"wti_end":91.85}],"moves":[{"brent_close":87.8,"brent_prev":98.96,"change_pct":-11.28,"date":"2026-03-10","note":"After the G7 emergency stock release on 9 March"},{"brent_close":100.46,"brent_prev":91.98,"change_pct":9.22,"date":"2026-03-12","note":"Rebound while Hormuz stayed disrupted (cause not verified)"},{"brent_close":99.94,"brent_prev":112.19,"change_pct":-10.92,"date":"2026-03-23","note":"Cause not verified"},{"brent_close":101.16,"brent_prev":118.35,"change_pct":-14.52,"date":"2026-04-01","note":"Largely technical: the Brent front-month contract switched from May to June delivery"},{"brent_close":94.75,"brent_prev":109.27,"change_pct":-13.29,"date":"2026-04-08","note":"Two-week US\u2013Iran ceasefire"},{"brent_close":90.38,"brent_prev":99.39,"change_pct":-9.07,"date":"2026-04-17","note":"Iran declares the Strait of Hormuz open"},{"brent_close":83.3,"brent_prev":76.01,"change_pct":9.59,"date":"2026-07-13","note":"US\u2013Iran tensions flare again"},{"brent_close":88.36,"brent_prev":96.78,"change_pct":-8.7,"date":"2026-07-27","note":"Cause not reported in the sources checked"}]};
+window.dash={colors:['var(--s1)','var(--s2)','var(--s3)','var(--s4)','#888','#888','#888','#888'],
+data:function(id){var d=window.__DATA__[id];return d?{status:'ok',data:d,columns:d.length?Object.keys(d[0]):[],refreshing:false,meta:[]}:{status:'missing',data:[]};},
+_cbs:[],onData:function(fn){this._cbs.push(fn);if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){fn();});}else{fn();}},
+refresh:function(){},params:function(){return {};},setParams:function(){},resetParams:function(){},setLink:function(){}};
+(function(){var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(function(){dash._cbs.forEach(function(f){f();});},150);});})();
+</script>
+<script>
+(function(){
+  const fmtUsd = (v) => v == null ? '—' : '$' + d3.format(',.2f')(v);
+  const fmtPct = (v) => v == null ? '—' : d3.format('+.1f')(v) + '%';
+  const fmtDate = (s) => d3.utcFormat('%-d %b %Y')(new Date(s + 'T00:00:00Z'));
+  const fmtShort = (s) => d3.utcFormat('%-d %b')(new Date(s + 'T00:00:00Z'));
+  const set = (sel, txt) => { document.querySelectorAll(sel).forEach((e) => { e.textContent = txt; e.classList.remove('dash-skeleton'); }); };
+  const $ = (id) => document.getElementById(id);
+  let range = 0;
+
+  // Agreed thresholds (constants)
+  const GAP_AMBER = 5, GAP_RED = 10, VOL_AMBER = 35, VOL_RED = 50, SHALE_FLOOR = 62;
+
+  document.querySelectorAll('#range .seg').forEach((b) => b.addEventListener('click', () => {
+    range = +b.dataset.range;
+    document.querySelectorAll('#range .seg').forEach((x) => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+    drawPrice();
+  }));
+
+  function ragHtml(el, level, text){
+    el.replaceChildren();
+    const d = document.createElement('span'); d.className = 'dot ' + level;
+    const t = document.createElement('span'); t.textContent = text;
+    el.append(d, t);
+  }
+  function chg(el, v, unit, goodWhenDown){
+    if (v == null) { el.textContent = ''; return; }
+    const arrow = v > 0 ? '▲' : v < 0 ? '▼' : '■';
+    el.className = 'chg ' + (v === 0 ? 'flat' : ((v > 0) === !goodWhenDown ? 'down' : 'up'));
+    el.textContent = arrow + ' ' + (unit === '$' ? (v > 0 ? '+' : v < 0 ? '−' : '') + '$' + d3.format(',.2f')(Math.abs(v)) : (v > 0 ? '+' : v < 0 ? '−' : '') + d3.format('.1f')(Math.abs(v)) + ' pts') + ' in the last week';
+  }
+  function failed(el, ds){
+    el.replaceChildren();
+    if (ds.some((s) => s.status === 'error' || s.status === 'connect' || s.status === 'declined' || s.status === 'missing')) {
+      const f = document.createElement('div'); f.className = 'failed'; f.textContent = 'Failed to load'; el.append(f);
+    }
+  }
+  function textW(svg, txt){
+    const t = svg.append('text').attr('font-size', 12).attr('opacity', 0).text(txt);
+    const w = t.node().getComputedTextLength(); t.remove(); return w;
+  }
+  function tipShow(tip, box, x, y){
+    tip.style.display = 'block';
+    const bw = box.clientWidth, tw = tip.offsetWidth, th = tip.offsetHeight;
+    let left = x + 14; if (left + tw > bw) left = x - tw - 14; if (left < 0) left = 0;
+    let top = y - th - 8; if (top < 0) top = y + 14;
+    tip.style.left = left + 'px'; tip.style.top = top + 'px';
+  }
+  function tipLines(tip, date, lines){
+    tip.replaceChildren();
+    const d = document.createElement('div'); d.className = 'd'; d.textContent = date; tip.append(d);
+    lines.forEach(([color, name, val]) => {
+      const r = document.createElement('div');
+      if (color) { const s = document.createElement('span'); s.className = 'sw'; s.style.background = color; r.append(s); }
+      r.append(document.createTextNode(name + ': ' + val)); tip.append(r);
+    });
+  }
+  function axisStyle(g){ g.attr('font-size', null).attr('font-family', null); g.selectAll('text').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)'); g.selectAll('line').attr('stroke', 'var(--cds-chart-grid)'); g.select('.domain').remove(); }
+
+  // ---------- headline ----------
+  function drawHeadline(){
+    const h = dash.data('headline');
+    if (h.status !== 'ok' || !h.data.length) return false;
+    const k = h.data[0];
+    set('[data-field="as_of"]', fmtDate(k.as_of));
+    set('[data-source="headline"][data-field="brent_last"]', fmtUsd(k.brent_last));
+    set('[data-source="headline"][data-field="wti_last"]', fmtUsd(k.wti_last));
+    set('[data-source="headline"][data-field="gap_last"]', fmtUsd(k.gap_last));
+    set('[data-source="headline"][data-field="brent_start"]', fmtUsd(k.brent_start));
+    set('[data-source="headline"][data-field="wti_start"]', fmtUsd(k.wti_start));
+    set('[data-source="headline"][data-field="gap_start"]', fmtUsd(k.gap_start));
+    set('[data-source="headline"][data-field="brent_ytd_pct"]', fmtPct(k.brent_ytd_pct));
+    set('[data-source="headline"][data-field="vol30"]', d3.format('.1f')(k.vol30) + '%');
+
+    chg($('k-brent-chg'), k.brent_1w_chg, '$', true);
+    const trendUp = k.brent_last > k.brent_ma20 && k.brent_last > k.brent_ma50;
+    const trendDown = k.brent_last < k.brent_ma20 && k.brent_last < k.brent_ma50;
+    ragHtml($('k-brent-rag'), trendUp ? 'r' : trendDown ? 'g' : 'a', trendUp ? 'Trend up: above 20- and 50-day averages' : trendDown ? 'Trend down: below both averages' : 'Mixed trend');
+    $('k-ytd-sub').className = 'chg flat';
+    $('k-ytd-sub').textContent = 'From ' + fmtUsd(k.brent_start) + ' on 2 Jan · year average ' + fmtUsd(k.brent_ytd_avg);
+    ragHtml($('k-ytd-rag'), k.brent_ytd_pct > 25 ? 'r' : k.brent_ytd_pct > 10 ? 'a' : 'g', k.brent_ytd_pct > 25 ? 'Much higher import costs than in January' : 'Moderate change');
+    chg($('k-wti-chg'), k.wti_1w_chg, '$', true);
+    ragHtml($('k-wti-sub'), '', 'Up ' + d3.format('.1f')(k.wti_ytd_pct) + '% this year (Brent ' + d3.format('.1f')(k.brent_ytd_pct) + '%)');
+    chg($('k-gap-chg'), k.gap_1w_chg, '$', true);
+    const gl = k.gap_last >= GAP_RED ? 'r' : k.gap_last >= GAP_AMBER ? 'a' : 'g';
+    ragHtml($('k-gap-rag'), gl, gl === 'r' ? 'Red: regional supply stress' : gl === 'a' ? 'Amber: tightening outside the US' : 'Green: normal');
+    const vEl = $('k-vol-chg');
+    vEl.className = 'chg ' + (k.vol30_1w_chg < 0 ? 'down' : 'up');
+    vEl.textContent = (k.vol30_1w_chg < 0 ? '▼ −' : '▲ +') + d3.format('.1f')(Math.abs(k.vol30_1w_chg)) + ' pts in the last week · year ' + d3.format('.1f')(k.vol_ytd) + '%';
+    const vl = k.vol30 >= VOL_RED ? 'r' : k.vol30 >= VOL_AMBER ? 'a' : 'g';
+    ragHtml($('k-vol-rag'), vl, vl === 'r' ? 'Red: crisis-level swings' : vl === 'a' ? 'Amber: above normal (25–35%)' : 'Green: normal');
+
+    $('takeaway').textContent = 'Brent is ' + fmtUsd(k.brent_last) + ', up ' + d3.format('.1f')(k.brent_ytd_pct) + '% this year after a war-driven spike in March, a fall to the summer low and a renewed climb since July. The Brent–WTI gap of ' + fmtUsd(k.gap_last) + ' shows the shortage is outside the US, close to our region, and price swings have calmed but remain above normal.';
+
+    $('price-means').replaceChildren();
+    const pm = $('price-means'); const b1 = document.createElement('b'); b1.textContent = 'What this means: ';
+    pm.append(b1, document.createTextNode('Brent (' + fmtUsd(k.brent_last) + ') is above its 20-day average (' + fmtUsd(k.brent_ma20) + ') and its 50-day average (' + fmtUsd(k.brent_ma50) + '), so the recent direction is up. Both prices are far above the US shale cost floor, so US output is not under pressure.'));
+
+    const vm = $('vol-means'); vm.replaceChildren(); const b2 = document.createElement('b'); b2.textContent = 'What this means: ';
+    vm.append(b2, document.createTextNode('Swings are now ' + d3.format('.1f')(k.vol30) + '%, down from crisis levels in the spring but still above the normal 25–35%. Over the whole year volatility was ' + d3.format('.1f')(k.vol_ytd) + '%, about twice normal.'));
+
+    const dm = $('dd-means'); dm.replaceChildren(); const b3 = document.createElement('b'); b3.textContent = 'What this means: ';
+    dm.append(b3, document.createTextNode('From its highest close of ' + fmtUsd(k.brent_peak) + ' (' + fmtDate(k.brent_peak_date) + ') Brent fell as much as ' + d3.format('.1f')(Math.abs(k.max_drawdown)) + '% by ' + fmtDate(k.max_drawdown_date) + '. An asset bought at the peak would have lost that much before recovering.'));
+
+    const gm = $('gap-means'); gm.replaceChildren(); const b4 = document.createElement('b'); b4.textContent = 'What this means: ';
+    gm.append(b4, document.createTextNode('The year average gap is ' + fmtUsd(k.gap_avg_ytd) + '. Today it is ' + fmtUsd(k.gap_last) + ', in the red zone and near the highest levels of the year, apart from the one-day spike of ' + fmtUsd(k.gap_max) + ' on ' + fmtDate(k.gap_max_date) + ' caused by a contract switch. The stress is in supply outside the US.'));
+
+    const fm = $('fc-means'); fm.replaceChildren(); const b5 = document.createElement('b'); b5.textContent = 'What this means: ';
+    fm.append(b5, document.createTextNode('The year average so far is ' + fmtUsd(k.brent_ytd_avg) + ' and October is averaging ' + fmtUsd(k.q4_brent_avg) + '. Forecasts that expected a quick return to calm (UBS, Goldman Sachs) are well below what happened; the EIA and the longer-war scenario are closer.'));
+
+    // Syria panel
+    const level = (gl === 'r' || k.brent_ytd_pct > 25) ? ['r', 'High'] : (gl === 'a' || vl !== 'g') ? ['a', 'Medium-high'] : ['g', 'Low'];
+    const rag = $('ssf-rag'); ragHtml(rag, level[0], level[1]); rag.style.fontSize = 'var(--cds-font-size-heading)';
+    const items = [
+      'Import bill: Syria imports most of the crude oil and fuel it uses, at prices linked to Brent. With Brent at ' + fmtUsd(k.brent_last) + ', ' + d3.format('.1f')(k.brent_ytd_pct) + '% above January, the same volume of fuel costs much more, and more hard currency is needed to pay for it.',
+      'Prices and the Syrian pound: fuel feeds into transport, bread, farming and factory costs, so higher oil prices push up consumer prices and add pressure on the exchange rate.',
+      'Electricity: power stations depend on fuel oil and gas. Dearer fuel makes it harder to extend supply hours and raises the cost of keeping prices affordable.',
+      'A regional premium: the Brent–WTI gap of ' + fmtUsd(k.gap_last) + ' means buyers in our region pay about ' + fmtUsd(k.gap_last) + ' million more per 1 million barrels than a buyer in the US. The shortage is close to home, and Gulf shipping and insurance costs are high.',
+      'Uncertainty for planning: price swings of ' + d3.format('.1f')(k.vol30) + '% make budgets and contracts hard to price. Planning with a range (for example Brent between this year’s low of ' + fmtUsd(k.brent_low) + ' and high of ' + fmtUsd(k.brent_peak) + ') is safer than relying on one price.',
+      'A possible offset: high prices raise Gulf producers’ revenues, which could support investment and aid flows to Syria. But the same conflict also raises risk for trade routes through the region.',
+      'What to watch: the gap staying above $' + GAP_RED + ', volatility rising back above ' + VOL_RED + '%, and news on shipping through the Strait of Hormuz.'
+    ];
+    const ul = $('ssf-list'); ul.replaceChildren(...items.map((t) => { const li = document.createElement('li'); li.textContent = t; return li; }));
+    return true;
+  }
+
+  // ---------- price chart ----------
+  function drawPrice(){
+    const box = $('price-chart');
+    const dd = dash.data('daily'), de = dash.data('events');
+    if (dd.status !== 'ok') { failed(box, [dd]); return; }
+    let rows = dd.data.map((r) => ({...r, d: new Date(r.date + 'T00:00:00Z'), brent: +r.brent, wti: +r.wti, ma20: r.brent_ma20 == null ? null : +r.brent_ma20, ma50: r.brent_ma50 == null ? null : +r.brent_ma50}));
+    if (range) { const last = rows[rows.length - 1].d; const from = d3.utcMonth.offset(last, -range); rows = rows.filter((r) => r.d >= from); }
+    const events = de.status === 'ok' ? de.data.map((e) => ({...e, d: new Date(e.date + 'T00:00:00Z')})).filter((e) => e.d >= rows[0].d) : [];
+    const C = dash.colors;
+    const lg = $('price-legend'); lg.replaceChildren();
+    [[C[0], 'Brent', 'solid'], [C[1], 'WTI', 'solid'], ['var(--cds-chart-muted)', '20-day avg (Brent)', 'dashed'], ['var(--cds-chart-muted)', '50-day avg (Brent)', 'dotted'], ['var(--cds-chart-reference)', 'US shale cost floor ≈ $' + SHALE_FLOOR, 'dashed']].forEach(([c, n, s]) => {
+      const sp = document.createElement('span'); const i = document.createElement('i'); i.style.borderTopColor = c; i.style.borderTopStyle = s; sp.append(i, document.createTextNode(n)); lg.append(sp);
+    });
+    box.replaceChildren();
+    const W = box.clientWidth || 600, H = 320;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const lo = Math.min(d3.min(rows, (r) => Math.min(r.brent, r.wti)), SHALE_FLOOR) - 4;
+    const hi = d3.max(rows, (r) => Math.max(r.brent, r.wti)) + 4;
+    const y = d3.scaleLinear([lo, hi], [H - 28, 26]).nice();
+    const ticks = y.ticks(6);
+    const ml = Math.max(...ticks.map((t) => textW(svg, '$' + t))) + 10;
+    const endW = textW(svg, 'Brent $000.00') + 10;
+    const x = d3.scaleUtc(d3.extent(rows, (r) => r.d), [ml, W - endW]);
+    svg.append('g').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).tickValues(ticks).tickFormat((t) => '$' + t).tickSize(-(W - endW - ml))).call(axisStyle);
+    const xt = Math.max(2, Math.min(10, Math.floor((W - ml - endW) / 70)));
+    svg.append('g').attr('transform', `translate(0,${H - 28})`).call(d3.axisBottom(x).ticks(xt).tickFormat(d3.utcFormat('%b')).tickSize(0).tickPadding(8)).call(axisStyle);
+    // shale floor
+    svg.append('line').attr('x1', ml).attr('x2', W - endW).attr('y1', y(SHALE_FLOOR)).attr('y2', y(SHALE_FLOOR)).attr('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '4 4');
+    svg.append('text').attr('x', ml + 4).attr('y', y(SHALE_FLOOR) - 4).attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text('US shale cost floor ≈ $' + SHALE_FLOOR);
+    // events
+    const eg = svg.append('g');
+    events.forEach((e) => {
+      const ex = x(e.d);
+      eg.append('line').attr('x1', ex).attr('x2', ex).attr('y1', 20).attr('y2', H - 28).attr('stroke', 'var(--cds-chart-grid)');
+      eg.append('circle').attr('cx', ex).attr('cy', 12).attr('r', 8).attr('fill', 'var(--color-fg)');
+      eg.append('text').attr('x', ex).attr('y', 15.5).attr('text-anchor', 'middle').attr('fill', 'var(--color-bg)').style('font-size', '10px').text(e.n);
+    });
+    const line = (f) => d3.line().defined((r) => f(r) != null).x((r) => x(r.d)).y((r) => y(f(r)));
+    svg.append('path').datum(rows).attr('d', line((r) => r.ma50)).attr('fill', 'none').attr('stroke', 'var(--cds-chart-muted)').attr('stroke-width', 1.5).attr('stroke-dasharray', '1 3');
+    svg.append('path').datum(rows).attr('d', line((r) => r.ma20)).attr('fill', 'none').attr('stroke', 'var(--cds-chart-muted)').attr('stroke-width', 1.5).attr('stroke-dasharray', '5 3');
+    svg.append('path').datum(rows).attr('d', line((r) => r.wti)).attr('fill', 'none').attr('stroke', C[1]).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round');
+    svg.append('path').datum(rows).attr('d', line((r) => r.brent)).attr('fill', 'none').attr('stroke', C[0]).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round');
+    const last = rows[rows.length - 1];
+    let yb = y(last.brent), yw = y(last.wti); if (Math.abs(yb - yw) < 14) { const m = (yb + yw) / 2; yb = m - 7; yw = m + 7; }
+    svg.append('text').attr('x', W - endW + 6).attr('y', yb + 4).attr('fill', C[0]).style('font-size', 'var(--cds-font-size-caption)').text('Brent ' + fmtUsd(last.brent));
+    svg.append('text').attr('x', W - endW + 6).attr('y', yw + 4).attr('fill', C[1]).style('font-size', 'var(--cds-font-size-caption)').text('WTI ' + fmtUsd(last.wti));
+    // hover
+    const tip = document.createElement('div'); tip.className = 'tip'; box.append(tip);
+    const rule = svg.append('line').attr('y1', 20).attr('y2', H - 28).attr('stroke', 'var(--cds-chart-axis)').style('display', 'none');
+    const db = svg.append('circle').attr('r', 4).attr('fill', C[0]).style('display', 'none');
+    const dw = svg.append('circle').attr('r', 4).attr('fill', C[1]).style('display', 'none');
+    const bis = d3.bisector((r) => r.d).center;
+    svg.append('rect').attr('x', ml).attr('y', 0).attr('width', W - endW - ml).attr('height', H - 28).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [px] = d3.pointer(ev); const r = rows[bis(rows, x.invert(px))];
+        const cx = x(r.d); rule.attr('x1', cx).attr('x2', cx).style('display', null);
+        db.attr('cx', cx).attr('cy', y(r.brent)).style('display', null); dw.attr('cx', cx).attr('cy', y(r.wti)).style('display', null);
+        const ev2 = events.find((e) => e.date === r.date);
+        const lines = [[C[0], 'Brent', fmtUsd(r.brent)], [C[1], 'WTI', fmtUsd(r.wti)], [null, 'Gap', fmtUsd(r.gap)]];
+        if (ev2) lines.push([null, 'Event ' + ev2.n, ev2.title]);
+        tipLines(tip, fmtDate(r.date), lines);
+        const scale = box.clientWidth / W; tipShow(tip, box, cx * scale, y(r.brent) * scale);
+      })
+      .on('pointerleave', () => { tip.style.display = 'none'; rule.style('display', 'none'); db.style('display', 'none'); dw.style('display', 'none'); });
+  }
+
+  // ---------- monthly ----------
+  function drawMonthly(){
+    const box = $('monthly-chart'), dm = dash.data('monthly');
+    const tb = document.querySelector('#monthly-table tbody');
+    if (dm.status !== 'ok') { failed(box, [dm]); tb.replaceChildren(); return; }
+    const rows = dm.data.map((r) => ({...r, brent_end: +r.brent_end, brent_avg: +r.brent_avg}));
+    tb.replaceChildren(...rows.map((r) => {
+      const tr = document.createElement('tr');
+      [r.label, fmtUsd(r.brent_end), fmtUsd(+r.brent_avg), fmtUsd(+r.brent_high), fmtUsd(+r.brent_low), fmtPct(+r.brent_chg_pct), fmtUsd(+r.wti_end), fmtUsd(+r.gap_avg)].forEach((v, i) => {
+        const td = document.createElement('td'); td.textContent = v;
+        if (i === 5) td.className = +r.brent_chg_pct > 0 ? 'up' : 'down';
+        tr.append(td);
+      });
+      return tr;
+    }));
+    box.replaceChildren();
+    const W = box.clientWidth || 400, H = 230, C = dash.colors;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const y = d3.scaleLinear([0, d3.max(rows, (r) => Math.max(r.brent_end, r.brent_avg)) * 1.12], [H - 26, 10]).nice();
+    const ticks = y.ticks(5); const ml = Math.max(...ticks.map((t) => textW(svg, '$' + t))) + 10;
+    const x = d3.scaleBand(rows.map((r) => r.month), [ml, W - 4]).padding(0.3);
+    svg.append('g').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).tickValues(ticks).tickFormat((t) => '$' + t).tickSize(-(W - 4 - ml))).call(axisStyle);
+    const lab = (m) => rows.find((r) => r.month === m).label.slice(0, 3);
+    svg.append('g').attr('transform', `translate(0,${H - 26})`).call(d3.axisBottom(x).tickFormat(lab).tickSize(0).tickPadding(8)).call(axisStyle);
+    const tip = document.createElement('div'); tip.className = 'tip'; box.append(tip);
+    const bw = Math.min(32, x.bandwidth());
+    const g = svg.append('g');
+    rows.forEach((r) => {
+      const cx = x(r.month) + x.bandwidth() / 2;
+      const bar = g.append('rect').attr('x', cx - bw / 2).attr('width', bw).attr('y', y(r.brent_end)).attr('height', y(0) - y(r.brent_end)).attr('rx', 4).attr('fill', C[0]).attr('opacity', 0.85);
+      g.append('circle').attr('cx', cx).attr('cy', y(r.brent_avg)).attr('r', 4).attr('fill', 'var(--color-panel)').attr('stroke', 'var(--color-fg)').attr('stroke-width', 2);
+      g.append('rect').attr('x', x(r.month)).attr('width', x.bandwidth()).attr('y', 0).attr('height', H - 26).attr('fill', 'transparent')
+        .on('pointermove', () => { bar.attr('opacity', 1); tipLines(tip, r.label + ' 2026', [[C[0], 'Month end', fmtUsd(r.brent_end)], [null, 'Average', fmtUsd(r.brent_avg)], [null, 'Change', fmtPct(+r.brent_chg_pct)]]); const s = box.clientWidth / W; tipShow(tip, box, cx * s, y(r.brent_end) * s); })
+        .on('pointerleave', () => { bar.attr('opacity', 0.85); tip.style.display = 'none'; });
+    });
+  }
+
+  // ---------- generic small series chart ----------
+  function series(boxId, field, opts){
+    const box = $(boxId), dd = dash.data('daily');
+    if (dd.status !== 'ok') { failed(box, [dd]); return; }
+    const rows = dd.data.filter((r) => r[field] != null).map((r) => ({date: r.date, d: new Date(r.date + 'T00:00:00Z'), v: +r[field]}));
+    box.replaceChildren();
+    const W = box.clientWidth || 400, H = opts.h || 230;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const y = d3.scaleLinear(opts.domain(rows), [H - 26, 10]).nice();
+    const ticks = y.ticks(5); const ml = Math.max(...ticks.map((t) => textW(svg, opts.tick(t)))) + 10;
+    const x = d3.scaleUtc(d3.extent(rows, (r) => r.d), [ml, W - 8]);
+    if (opts.bands) opts.bands.forEach(([a, b, c, label]) => {
+      const y0 = y(Math.min(b, y.domain()[1])), y1 = y(Math.max(a, y.domain()[0]));
+      if (y1 > y0) {
+        svg.append('rect').attr('x', ml).attr('width', W - 8 - ml).attr('y', y0).attr('height', y1 - y0).attr('fill', c).attr('opacity', 0.10);
+        if (label) svg.append('text').attr('x', W - 12).attr('y', y0 + 14).attr('text-anchor', 'end').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text(label);
+      }
+    });
+    svg.append('g').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).tickValues(ticks).tickFormat(opts.tick).tickSize(-(W - 8 - ml))).call(axisStyle);
+    svg.append('g').attr('transform', `translate(0,${H - 26})`).call(d3.axisBottom(x).ticks(Math.max(2, Math.min(10, Math.floor((W - ml) / 60)))).tickFormat(d3.utcFormat('%b')).tickSize(0).tickPadding(8)).call(axisStyle);
+    const color = opts.color || dash.colors[0];
+    if (opts.area) {
+      const id = 'g' + boxId;
+      const gr = svg.append('defs').append('linearGradient').attr('id', id).attr('x1', 0).attr('x2', 0).attr('y1', 0).attr('y2', 1);
+      [[0, .26], [.25, .16], [.5, .08], [.75, .03], [1, 0]].forEach(([o, a]) => gr.append('stop').attr('offset', o).attr('style', `stop-color:${color};stop-opacity:${a}`));
+      svg.append('path').datum(rows).attr('d', d3.area().x((r) => x(r.d)).y0(y(0)).y1((r) => y(r.v))).attr('fill', `url(#${id})`);
+    }
+    if (opts.zero) svg.append('line').attr('x1', ml).attr('x2', W - 8).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', 'var(--cds-chart-axis)');
+    svg.append('path').datum(rows).attr('d', d3.line().x((r) => x(r.d)).y((r) => y(r.v))).attr('fill', 'none').attr('stroke', color).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round');
+    const tip = document.createElement('div'); tip.className = 'tip'; box.append(tip);
+    const dot = svg.append('circle').attr('r', 4).attr('fill', color).style('display', 'none');
+    const bis = d3.bisector((r) => r.d).center;
+    svg.append('rect').attr('x', ml).attr('y', 0).attr('width', W - 8 - ml).attr('height', H - 26).attr('fill', 'transparent')
+      .on('pointermove', (ev) => { const [px] = d3.pointer(ev); const r = rows[bis(rows, x.invert(px))]; dot.attr('cx', x(r.d)).attr('cy', y(r.v)).style('display', null); tipLines(tip, fmtDate(r.date), [[null, opts.name, opts.fmt(r.v)]]); const s = box.clientWidth / W; tipShow(tip, box, x(r.d) * s, y(r.v) * s); })
+      .on('pointerleave', () => { dot.style('display', 'none'); tip.style.display = 'none'; });
+  }
+
+  // ---------- moves & events tables ----------
+  function drawMoves(){
+    const dm = dash.data('moves'), tb = document.querySelector('#moves-table tbody');
+    if (dm.status !== 'ok') { tb.replaceChildren(); return; }
+    tb.replaceChildren(...dm.data.map((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.date;
+      [fmtDate(r.date), fmtUsd(+r.brent_prev), fmtUsd(+r.brent_close), fmtPct(+r.change_pct), r.note].forEach((v, i) => {
+        const td = document.createElement('td'); td.textContent = v;
+        if (i === 3) td.className = +r.change_pct > 0 ? 'up' : 'down';
+        if (i === 4) td.className = 'txt';
+        tr.append(td);
+      });
+      return tr;
+    }));
+  }
+  function drawEvents(){
+    const de = dash.data('events'), tb = document.querySelector('#events-table tbody');
+    if (de.status !== 'ok') { tb.replaceChildren(); return; }
+    tb.replaceChildren(...de.data.map((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.date;
+      const n = document.createElement('td'); const s = document.createElement('span'); s.className = 'evn'; s.textContent = r.n; n.append(s);
+      const dt = document.createElement('td'); dt.textContent = fmtDate(r.date); dt.style.whiteSpace = 'nowrap';
+      const ti = document.createElement('td'); ti.className = 'txt'; ti.textContent = r.title; ti.style.fontWeight = 'var(--cds-font-weight-medium)';
+      const de2 = document.createElement('td'); de2.className = 'txt'; de2.textContent = r.detail;
+      const so = document.createElement('td'); so.className = 'txt'; const a = document.createElement('a'); a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = r.source; so.append(a);
+      tr.append(n, dt, ti, de2, so); return tr;
+    }));
+  }
+
+  // ---------- forecasts ----------
+  function drawForecasts(){
+    const box = $('fc-chart'), df = dash.data('forecasts'), dh = dash.data('headline');
+    if (df.status !== 'ok' || dh.status !== 'ok') { failed(box, [df, dh]); return; }
+    const k = dh.data[0]; const C = dash.colors;
+    const actual = {ytd_avg: [+k.brent_ytd_avg, 'Year average so far'], q4_avg: [+k.q4_brent_avg, 'October average so far'], latest: [+k.brent_last, 'Latest price']};
+    const rows = df.data.map((r) => ({...r, value: +r.value, act: actual[r.compare_to][0], actLabel: actual[r.compare_to][1]}));
+    const lg = $('fc-legend'); lg.replaceChildren();
+    [['Forecast', true], ['Actual so far', false]].forEach(([n, filled]) => { const sp = document.createElement('span'); const i = document.createElement('span'); i.className = 'dot'; i.style.background = filled ? C[2] : 'transparent'; i.style.border = '2px solid ' + (filled ? C[2] : 'var(--color-fg)'); i.style.marginRight = '6px'; sp.append(i, document.createTextNode(n)); lg.append(sp); });
+    box.replaceChildren();
+    const W = box.clientWidth || 500, rowH = 40, H = rows.length * rowH + 30;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const narrow = W < 520;
+    const lw = narrow ? 0 : Math.max(...rows.map((r) => textW(svg, r.forecaster))) + 16;
+    const x = d3.scaleLinear([d3.min(rows, (r) => Math.min(r.value, r.act)) - 8, d3.max(rows, (r) => Math.max(r.value, r.act)) + 8], [lw + 8, W - 12]).nice();
+    svg.append('g').attr('transform', `translate(0,${H - 24})`).call(d3.axisBottom(x).ticks(6).tickFormat((t) => '$' + t).tickSize(-(H - 30))).call(axisStyle);
+    const tip = document.createElement('div'); tip.className = 'tip'; box.append(tip);
+    rows.forEach((r, i) => {
+      const cy = i * rowH + (narrow ? 26 : 20);
+      if (narrow) svg.append('text').attr('x', lw + 8).attr('y', cy - 12).attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text(r.forecaster + ' · ' + r.measure);
+      else svg.append('text').attr('x', 0).attr('y', cy + 4).attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text(r.forecaster);
+      svg.append('line').attr('x1', x(r.value)).attr('x2', x(r.act)).attr('y1', cy).attr('y2', cy).attr('stroke', 'var(--cds-chart-muted)').attr('stroke-width', 2);
+      svg.append('circle').attr('cx', x(r.act)).attr('cy', cy).attr('r', 6).attr('fill', 'var(--color-panel)').attr('stroke', 'var(--color-fg)').attr('stroke-width', 2);
+      svg.append('circle').attr('cx', x(r.value)).attr('cy', cy).attr('r', 6).attr('fill', C[2]);
+      svg.append('rect').attr('x', 0).attr('width', W).attr('y', cy - rowH / 2).attr('height', rowH).attr('fill', 'transparent')
+        .on('pointermove', (ev) => { tipLines(tip, r.forecaster + ' · issued ' + r.issued, [[C[2], 'Forecast (' + r.measure + ')', fmtUsd(r.value)], [null, r.actLabel, fmtUsd(r.act)], [null, 'Difference', (r.act - r.value >= 0 ? '+' : '−') + '$' + d3.format('.2f')(Math.abs(r.act - r.value))]]); const [px, py] = d3.pointer(ev, box); tipShow(tip, box, px, py); })
+        .on('pointerleave', () => { tip.style.display = 'none'; });
+    });
+  }
+
+  function drawAll(){
+    drawHeadline();
+    drawPrice();
+    drawMonthly();
+    series('vol-chart', 'vol30', {name: '30-day volatility', fmt: (v) => d3.format('.1f')(v) + '%', tick: (t) => t + '%', domain: (r) => [0, Math.max(60, d3.max(r, (q) => q.v) + 5)], bands: [[0, VOL_AMBER, 'var(--color-ok)', 'Normal'], [VOL_AMBER, VOL_RED, 'var(--color-warn)', 'Elevated'], [VOL_RED, 999, 'var(--color-bad)', 'Crisis']], color: dash.colors[0]});
+    series('dd-chart', 'drawdown', {name: 'Below peak', fmt: (v) => d3.format('.1f')(v) + '%', tick: (t) => t + '%', domain: (r) => [d3.min(r, (q) => q.v) - 3, 0], area: false, zero: true, color: 'var(--cds-chart-status-critical)'});
+    series('gap-chart', 'gap', {h: 280, name: 'Brent − WTI', fmt: fmtUsd, tick: (t) => '$' + t, domain: (r) => [Math.min(0, d3.min(r, (q) => q.v)) - 1, d3.max(r, (q) => q.v) + 1], bands: [[-99, GAP_AMBER, 'var(--color-ok)', 'Normal'], [GAP_AMBER, GAP_RED, 'var(--color-warn)', 'Tight'], [GAP_RED, 999, 'var(--color-bad)', 'Stress']], zero: true, color: dash.colors[3]});
+    drawMoves();
+    drawEvents();
+    drawForecasts();
+    document.querySelectorAll('.oil .chart.dash-skeleton').forEach((el) => {
+      const ids = (el.dataset.source || '').split(' ');
+      if (ids.every((id) => dash.data(id).status !== 'loading')) el.classList.remove('dash-skeleton');
+    });
+  }
+  dash.onData(drawAll);
+})();
+</script>
+<p class="foot">Analysis by Alaa Sardar. Prices: Yahoo Finance front-month futures closes (Brent BZ=F, WTI CL=F), 2 January – 9 October 2026. Views are my own and do not represent any institution. Not investment advice.</p>
+</div></body></html>
